@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+        <!--
+        @Controller, @Service, @Repository, @Component写在类的脑袋上面的时候都可以完成自动注册bean的功能
+        @Component：可以在任意类上添加
+        @Controller：Controller专用，放置在控制层，用来接收用户的请求
+        @Service： 放置在业务逻辑层
+        @Repository： 放置在数据访问层
+        但这些规定并不是spring识别的标识，注入的时候spring 不会对这四个注解作区分，他们是给程序员看的，最好区分使用
+        提高代码可读性.
+        在使用注解的时候，还需要告诉spring从那个包开始扫描,需要导入context命名空间. 当定义好大的路径之后，可以做更细粒度的控制，
+        用context子标签：include-filter和exclude-filter表示包含和不包含哪些包。
+        type表示规则的类型：assignable 可以指定对应的类的名称，但表达式必须是完全限定名, 排除多个就都写出来，写全了。
+        annotation表示包括或者排除某个注解，必须是注解的完全限定名,
+        regex 一般不用，容易出错, aspectj, custom expression是表达式
+        在使用注解的时候没有定义id和class，
+        那么如何根据id来识别？是把有以上注解标注的类的名称的首字母小写之后的字符串做id的, 如果需要改变名称，那么需要在
+        注解后面添加参数值value（可不写"value"）
+        默认组件都是单例的，如果需要多例，则要再加一个注解：@Scope("prototype")
+
+        xml和注解的比较：xml完整全面，注解快。两边都配置了，配置的不一样，则xml起作用
+        -->
+    <context:component-scan base-package="com.lisz">
+<!--        <context:include-filter type="assignable" expression="com.lisz.controller.PersonController"/>-->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+<!--    <bean id="personController" class="com.lisz.controller.PersonController"/>-->
+</beans>
