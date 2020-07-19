@@ -2,6 +2,8 @@ package com.lisz;
 
 import com.lisz.controller.PersonController;
 import com.lisz.service.PersonService;
+import com.lisz.service.StudentService;
+import com.lisz.service.TeacherService;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -10,11 +12,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 
 public class MyTest {
+	// 不写参数的话会报错：BeanFactory not initialized or already closed - call 'refresh' before accessing
+	private ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application-config.xml");
 
 	@Test
 	public void test01() {
-		// 不写参数的话会报错：BeanFactory not initialized or already closed - call 'refresh' before accessing
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application-config.xml");
+
 		// 第一个参数是bean名字，如果和xml文件里的bean的id对不上的话，会报错
 		System.out.println(context.getBean("personController", PersonController.class));
 		// 现在注释掉xml文件中的bean，改用注解
@@ -24,5 +27,13 @@ public class MyTest {
 		// @Autowired
 		PersonController controller = context.getBean("personController", PersonController.class);
 		controller.save();
+	}
+
+	@Test
+	public void test02() {
+		StudentService studentService = context.getBean("studentService", StudentService.class);
+		studentService.save();
+		TeacherService teacherService = context.getBean("teacherService", TeacherService.class);
+		teacherService.save();
 	}
 }
