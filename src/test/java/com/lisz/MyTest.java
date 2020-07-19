@@ -21,5 +21,8 @@ public class MyTest {
 		System.out.println(context.getBean("personService", PersonService.class));
 		// 再次获取，发现和上面的相等，单例。多例的话要再加一个注解：@Scope("prototype")
 		System.out.println(context.getBean("personService", PersonService.class));
+		// @Autowired
+		PersonController controller = context.getBean("personController", PersonController.class);
+		controller.save();
 	}
 }
